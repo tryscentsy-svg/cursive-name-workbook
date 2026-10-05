@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cursive Name Workbook Generator</title>
+<style>
+:root{--pink:#f48bb8;--blue:#76c9ef;--green:#79d48a;--purple:#c98af1;--gold:#f4c84c;--ink:#1e2630;--soft:#f8fafc}
+*{box-sizing:border-box}
+body{margin:0;background:#eef2f5;color:var(--ink);font-family:Arial,sans-serif}
+.control{position:sticky;top:0;z-index:10;background:white;padding:14px 18px;border-bottom:1px solid #ccd4dc;box-shadow:0 2px 10px #0001}
+.control-inner{max-width:900px;margin:auto;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.control label{font-weight:800}
+.control input{flex:1;min-width:240px;padding:11px 14px;border:2px solid var(--pink);border-radius:10px;font-size:18px}
+button{border:0;border-radius:10px;padding:11px 16px;font-weight:800;cursor:pointer}
+.generate{background:var(--pink);color:#fff}.print{background:#26364a;color:#fff}
+.note{max-width:900px;margin:10px auto 0;font-size:12px;color:#68727c}
+.pages{padding:18px}
+.page{width:8.5in;height:11in;background:white;margin:0 auto 18px;padding:.42in .48in;border:4px solid var(--accent);border-radius:18px;position:relative;overflow:hidden;page-break-after:always}
+.page:last-child{page-break-after:auto}
+.badge{position:absolute;left:.25in;top:.2in;background:var(--accent);padding:8px 14px;border-radius:12px;font-weight:800}
+h1{text-align:center;margin:.05in 0 .08in;font-size:31px}
+.sub{text-align:center;margin:0 0 .16in;font-size:15px}
+.entry{width:76%;margin:.12in auto .18in;padding:10px;border:2px solid var(--accent);border-radius:10px;text-align:center;font-size:20px;background:#fff}
+.demo{background:var(--wash);border-radius:22px;padding:.12in .2in;margin:.08in 0 .16in;text-align:center}
+.script{font-family:"Segoe Script","Lucida Handwriting","Brush Script MT",cursive;font-size:46px;line-height:1.25}
+.trace{color:#a9afb5}
+.instructions{font-size:13px;text-align:center;margin-bottom:.08in}
+.practice-row{height:.92in;position:relative;border-bottom:2px solid #4f5962;margin:.04in 0}
+.practice-row:before{content:"";position:absolute;left:0;right:0;top:48%;border-top:1px dashed #b9c0c6}
+.practice-row:after{content:"";position:absolute;left:0;right:0;top:6%;border-top:1px solid #cfd5da}
+.practice-row .script{position:absolute;left:.18in;bottom:.02in;font-size:38px;color:#aeb4ba}
+.section-title{display:inline-block;background:var(--accent);padding:5px 12px;border-radius:10px;font-weight:800;margin:.04in 0}
+.tip{background:var(--wash);border:1px solid var(--accent);border-radius:12px;padding:9px 12px;font-size:13px;margin:.12in 0}
+.sigbox{height:1.05in;border:2px solid #69727a;border-radius:9px;margin:.1in 0;position:relative}
+.sigbox:after{content:"";position:absolute;left:.18in;right:.18in;top:52%;border-top:1px dashed #c1c6ca}
+.number{position:absolute;left:-.34in;top:.3in;width:.28in;height:.28in;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:800}
+.certificate{border:4px solid var(--gold);border-radius:28px;padding:.18in;text-align:center;background:#fffdf3;margin-top:.12in}
+.cert-title{font-size:26px;font-weight:900}.cert-name{font-family:"Segoe Script","Lucida Handwriting","Brush Script MT",cursive;font-size:28px;border-bottom:1px solid #555;display:inline-block;min-width:3.2in;padding:5px}
+.small{font-size:12px}
+.footer{position:absolute;bottom:.15in;right:.3in;font-size:10px;color:#8b949c}
+@media print{
+ body{background:white}.control,.note{display:none}.pages{padding:0}.page{margin:0;border-width:3px;border-radius:0}
+}
+</style>
+</head>
+<body>
+<div class="control">
+ <div class="control-inner">
+  <label for="fullName">Student's full name</label>
+  <input id="fullName" value="Michelle Barnard" autocomplete="off">
+  <button class="generate" onclick="generate()">Generate Workbook</button>
+  <button class="print" onclick="window.print()">Print / Save PDF</button>
+ </div>
+ <div class="note">Type the name once, choose Generate Workbook, then use Print / Save PDF. For the connected handwriting, this file uses the cursive/script font available on your device.</div>
+</div>
+
+<div class="pages">
+<section class="page" style="--accent:var(--pink);--wash:#fff0f6">
+ <div class="badge">Page 1</div><h1>My First Name ♡</h1>
+ <div class="sub">Start by entering the student's full name.</div>
+ <div class="entry" id="entryName">Michelle Barnard</div>
+ <div class="instructions">Now practice the <b>first name</b> in cursive.</div>
+ <div class="demo"><div class="script" id="firstDemo">Michelle</div></div>
+ <div class="section-title">Trace It</div>
+ <div class="practice-row"><span class="script trace first">Michelle</span></div>
+ <div class="practice-row"><span class="script trace first">Michelle</span></div>
+ <div class="section-title">Write It</div>
+ <div class="practice-row"></div><div class="practice-row"></div><div class="practice-row"></div><div class="practice-row"></div>
+ <div class="footer">Cursive Name Practice</div>
+</section>
+
+<section class="page" style="--accent:var(--blue);--wash:#eef9ff">
+ <div class="badge">Page 2</div><h1>My Last Name ☆</h1>
+ <div class="sub">Practice the last name slowly, then try it independently.</div>
+ <div class="demo"><div class="script" id="lastDemo">Barnard</div></div>
+ <div class="section-title">Trace It</div>
+ <div class="practice-row"><span class="script trace last">Barnard</span></div>
+ <div class="practice-row"><span class="script trace last">Barnard</span></div>
+ <div class="section-title">Write It</div>
+ <div class="practice-row"></div><div class="practice-row"></div><div class="practice-row"></div><div class="practice-row"></div>
+ <div class="tip"><b>Remember:</b> Keep the letters flowing together. It is okay to slow down while learning the movement.</div>
+ <div class="footer">Cursive Name Practice</div>
+</section>
+
+<section class="page" style="--accent:var(--green);--wash:#effbef">
+ <div class="badge">Page 3</div><h1>My Full Name ♡</h1>
+ <div class="sub">Put the first and last name together.</div>
+ <div class="demo"><div class="script full">Michelle Barnard</div></div>
+ <div class="section-title">Trace It</div>
+ <div class="practice-row"><span class="script trace full">Michelle Barnard</span></div>
+ <div class="practice-row"><span class="script trace full">Michelle Barnard</span></div>
+ <div class="section-title">Write It</div>
+ <div class="practice-row"></div><div class="practice-row"></div><div class="practice-row"></div><div class="practice-row"></div>
+ <div class="tip"><b>Tip:</b> Leave a comfortable space between the first and last name.</div>
+ <div class="footer">Cursive Name Practice</div>
+</section>
+
+<section class="page" style="--accent:var(--purple);--wash:#f8efff">
+ <div class="badge">Page 4</div><h1>Create Your Signature ✎</h1>
+ <div class="sub">A signature can be a faster, more natural version of your cursive name.</div>
+ <div class="demo"><div class="script full" style="font-size:42px">Michelle Barnard</div></div>
+ <div class="tip"><b>Try this:</b> Make the first letters a little larger. Keep the motion smooth. Test a few versions and choose the one that feels easiest to repeat.</div>
+ <div class="section-title">Practice Your Signature</div>
+ <div class="sigbox"></div><div class="sigbox"></div><div class="sigbox"></div><div class="sigbox"></div>
+ <div class="footer">Cursive Name Practice</div>
+</section>
+
+<section class="page" style="--accent:var(--gold);--wash:#fff9dc">
+ <div class="badge">Page 5</div><h1>My Signature Challenge ☆</h1>
+ <div class="sub">Write your best signature 5 times. Circle your favorite!</div>
+ <div style="padding-left:.35in">
+  <div class="sigbox"><span class="number">1</span></div>
+  <div class="sigbox"><span class="number">2</span></div>
+  <div class="sigbox"><span class="number">3</span></div>
+  <div class="sigbox"><span class="number">4</span></div>
+  <div class="sigbox"><span class="number">5</span></div>
+ </div>
+ <div class="certificate">
+   <div class="cert-title">I Learned My Signature!</div>
+   <div class="small">This certificate belongs to</div>
+   <div class="cert-name full">Michelle Barnard</div>
+   <div style="margin-top:8px">I practiced writing my name in cursive and created my own signature.</div>
+   <div style="margin-top:10px">Date: ____________________</div>
+ </div>
+ <div class="footer">Cursive Name Practice</div>
+</section>
+</div>
+
+<script>
+function cleanName(v){return v.trim().replace(/\s+/g,' ')}
+function generate(){
+ const full=cleanName(document.getElementById('fullName').value);
+ if(!full){alert("Please enter the student's full name.");return}
+ const parts=full.split(' ');
+ const first=parts[0];
+ const last=parts.length>1?parts.slice(1).join(' '):parts[0];
+ document.getElementById('entryName').textContent=full;
+ document.getElementById('firstDemo').textContent=first;
+ document.getElementById('lastDemo').textContent=last;
+ document.querySelectorAll('.first').forEach(e=>e.textContent=first);
+ document.querySelectorAll('.last').forEach(e=>e.textContent=last);
+ document.querySelectorAll('.full').forEach(e=>e.textContent=full);
+ fitScripts();
+}
+function fitScripts(){
+ document.querySelectorAll('.script').forEach(el=>{
+   el.style.fontSize='';
+   let size=parseFloat(getComputedStyle(el).fontSize);
+   const parent=el.parentElement;
+   while(el.scrollWidth > parent.clientWidth-20 && size>22){size-=1;el.style.fontSize=size+'px'}
+ });
+}
+document.getElementById('fullName').addEventListener('keydown',e=>{if(e.key==='Enter')generate()});
+window.addEventListener('load',generate);
+</script>
+</body>
+</html>
